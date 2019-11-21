@@ -1,0 +1,27 @@
+*.dll
+*.pdb
+*.dll.config
+*.cache
+*.suo
+bin/
+obj/
+[Bb]in
+[Oo]bj
+TestResults/
+node_modules/
+_dist/
+#############
+# Resharper #
+#############
+/_ReSharper.*
+*.ReSharper.*
+######################
+# Logs and databases #
+######################
+*.log
+*.log*
+*.sqlite
+/src/.vs
+/.vs
+*.user
+*.VSWorkspaceState.*
