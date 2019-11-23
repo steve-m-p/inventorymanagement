@@ -4,14 +4,13 @@
 
 @model InventoryManagement.Models.ItemsViewModel
 <div class="row">
-    <div class="col-6">
+    <div class="col-10">
         <form method="post">
-
             <!-- Input and Submit elements -->
 
             @foreach (var item in Model.Items)
             {
-                <div class="form-group row itemRow">
+                <div class="form-group row itemRow p-1">
                     <div class="col">
                         <label for="txtName">Name</label>
                         <input type="text" class="form-control" id="txtName" placeholder="Name" name="Name" value="@item.Name">
@@ -22,25 +21,21 @@
                     </div>
                     <div class="col">
                         <label for="txtQuality">Quality</label>
-                        <input type="number" class="form-control" id="txtQuality" placeholder="Quality" name="Quality" value="@item.Quality">
+                        <input type="number" class="form-control" id="txtQuality" min="0" placeholder="Quality" name="Quality" value="@item.Quality">
+                    </div>
+                    <div>
+                        <label for="txtResult">Result</label>
+                        <input type="text" class="form-control" id="txtResult" disabled name="Result" value="">
                     </div>
                 </div>
             }
-            <button id="btnPost">Click Me</button>
+            <button id="btnPost" class="btn btn-primary float-right">Update</button>
         </form>
 
 
     </div>
 
-    <div class="col-6">
-        Updated Inventory:
-        
-        <div class="results">
-            <ul class="results-list"></ul>
-        </div>
-
-
-    </div>
+    
 </div>
 
 <script>
@@ -51,9 +46,6 @@
         e.preventDefault();
         var items = [];
         $('.itemRow').each(function (item) {
-
-            console.log(this);
-
             items.push({
                 'Name': $(this).find("input[name='Name']").val(),
                 'SellIn': $(this).find("input[name='SellIn']").val(),
@@ -68,11 +60,9 @@
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (response) {
-                    var $resultList = $('.results-list');
-                    $resultList.empty();
-                    response.forEach(function (item) {
-                        const $itemResult = $(`<li>${item}</li>`);
-                        $resultList.append($itemResult);
+
+                    $('.itemRow').each(function(index) {
+                        $(this).find("input[name='Result']").val(response[index]);
                     });
                 },
                 failure: function(response) {
