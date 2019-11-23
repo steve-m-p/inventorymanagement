@@ -1,11 +1,19 @@
 ﻿using System.Collections.Generic;
 using InventoryManagement.Models;
+using InventoryManagement.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InventoryManagement.Controllers
 {
     public class HomeController : Microsoft.AspNetCore.Mvc.Controller
     {
+        private IInventoryManagementService _inventoryManagementService;
+
+        public HomeController(IInventoryManagementService inventoryManagementService)
+        {
+            _inventoryManagementService = inventoryManagementService;
+        }
+
         public IActionResult Index()
         {
             var items = new List<Item>()
@@ -27,9 +35,11 @@ namespace InventoryManagement.Controllers
         }
 
         [HttpPost]
-        public IActionResult Update()
+        public IActionResult Update([FromBody] List<Item> items)
         {
-            return View("Index");
+            var results = _inventoryManagementService.Update(items);
+
+            return Ok(results);
         }
     }
 }

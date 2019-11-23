@@ -1,38 +1,86 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Index";
 }
 
 @model InventoryManagement.Models.ItemsViewModel
-
+<div class="row">
     <div class="col-6">
-        <form asp-controller="Home" asp-action="Update" method="post" class="form-inline">
+        <form method="post">
+
             <!-- Input and Submit elements -->
+
             @foreach (var item in Model.Items)
             {
-                <div class="row">
-                    <div class="form-group">
+                <div class="form-group row itemRow">
+                    <div class="col">
                         <label for="txtName">Name</label>
-                        <input type="text" class="form-control" id="txtName" placeholder="Name" value="@item.Name">
+                        <input type="text" class="form-control" id="txtName" placeholder="Name" name="Name" value="@item.Name">
                     </div>
-                    <div class="form-group">
+                    <div class="col">
                         <label for="txtSellIn">Sell In</label>
-                        <input type="number" class="form-control" id="txtSellIn" placeholder="Sell In" value="@item.SellIn" >
+                        <input type="number" class="form-control" id="txtSellIn" placeholder="Sell In" name="SellIn" value="@item.SellIn">
                     </div>
-                    <div class="form-group">
+                    <div class="col">
                         <label for="txtQuality">Quality</label>
-                        <input type="number" class="form-control" id="txtQuality" placeholder="Quality" value="@item.Quality">
+                        <input type="number" class="form-control" id="txtQuality" placeholder="Quality" name="Quality" value="@item.Quality">
                     </div>
                 </div>
-
             }
-
-
+            <button id="btnPost">Click Me</button>
         </form>
+
+
     </div>
 
     <div class="col-6">
+        Updated Inventory:
+        
+        <div class="results">
+            <ul class="results-list"></ul>
+        </div>
+
 
     </div>
+</div>
 
-   
+<script>
+
+    var url = '@Url.Action("Update", "Home")';
+
+    $("#btnPost").click(function(e) {
+        e.preventDefault();
+        var items = [];
+        $('.itemRow').each(function (item) {
+
+            console.log(this);
+
+            items.push({
+                'Name': $(this).find("input[name='Name']").val(),
+                'SellIn': $(this).find("input[name='SellIn']").val(),
+                'Quality': $(this).find("input[name='Quality']").val()
+            });
+        });
+        
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: JSON.stringify(items),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    var $resultList = $('.results-list');
+                    $resultList.empty();
+                    response.forEach(function (item) {
+                        const $itemResult = $(`<li>${item}</li>`);
+                        $resultList.append($itemResult);
+                    });
+                },
+                failure: function(response) {
+                    alert(response.responseText);
+                },
+                error: function(response) {
+                    alert(response.responseText);
+                }
+            });
+    });
+</script>
