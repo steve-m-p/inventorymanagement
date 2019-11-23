@@ -1,11 +1,12 @@
+using System;
 using FluentAssertions;
 using InventoryManagement.Models;
 using InventoryManagement.Services;
 using Xunit;
 
-namespace InventoryManagement.UnitTests
+namespace InventoryManagement.Tests
 {
-    public class OutputTests
+    public class AcceptanceTests
     {
         private IInventoryManagementService _inventoryManagementService = new Services.InventoryManagementService();
 
@@ -18,8 +19,8 @@ namespace InventoryManagement.UnitTests
             var result =_inventoryManagementService.Update(item);
             //THEN
             result.Name.Should().Be("Aged Brie");
-            result.SellIn.Should().Be(2);
-            result.Quality.Should().Be(0);
+            result.SellIn.Should().Be(0);
+            result.Quality.Should().Be(2);
         }
         [Fact]
         public void GivenChristmasCrackers_SellInMinus1_Quality2_WhenUpdated_ThenChristmasCrackers_SellInMinus2_Quality0_Returned()
@@ -62,12 +63,12 @@ namespace InventoryManagement.UnitTests
         public void GivenFrozenItem_SellInMinus1_Quality55_WhenUpdated_ThenFrozenItem_SellInMinus2_Quality50_Returned()
         {
             //GIVEN
-            var item = new Item() { Name = "Frozen Item", SellIn = -1, Quality = 50 };
+            var item = new Item() { Name = "Frozen Item", SellIn = -1, Quality = 55};
             //WHEN
             var result = _inventoryManagementService.Update(item);
             //THEN
             result.Name.Should().Be("Frozen Item");
-            result.SellIn.Should().Be(-1);
+            result.SellIn.Should().Be(-2);
             result.Quality.Should().Be(50);
         }
         [Fact]
@@ -88,11 +89,11 @@ namespace InventoryManagement.UnitTests
             //GIVEN
             var item = new Item() { Name = "INVALID ITEM", SellIn = 2, Quality = 2 };
             //WHEN
-            var result = _inventoryManagementService.Update(item);
+            
+            Action action = () => _inventoryManagementService.Update(item);
+            
             //THEN
-            result.Name.Should().Be("Frozen Item");
-            result.SellIn.Should().Be(1);
-            result.Quality.Should().Be(1);
+            action.Should().Throw<ArgumentException>("INVALID ITEM");
         }
         [Fact]
         public void GivenFreshItem_SellIn2_Quality2_WhenUpdated_ThenFreshItem_SellIn1_Quality0_Returned()
