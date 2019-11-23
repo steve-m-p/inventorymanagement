@@ -1,4 +1,4 @@
-# Inventory Manangement
+# Inventory Management
 
 ## Dependancies
 
@@ -6,7 +6,9 @@ All packages are managed by Nuget Package Manager and will restore on build.
   
 xUnit  
 AutoFac  
-FluentAssertions
+FluentAssertions  
+Bootstrap  
+Jquery
 
 ## Usage
 
