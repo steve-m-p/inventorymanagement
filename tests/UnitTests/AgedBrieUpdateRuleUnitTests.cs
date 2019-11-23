@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using FluentAssertions;
+﻿using FluentAssertions;
 using InventoryManagement.Models;
 using InventoryManagement.Rules;
 using Xunit;
 
-namespace InventoryManagement.Tests
+namespace InventoryManagement.Tests.UnitTests
 {
     public class AgedBrieUpdateRuleUnitTests
     {

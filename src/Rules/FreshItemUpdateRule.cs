@@ -8,7 +8,7 @@ namespace InventoryManagement.Rules
 {
     public class FreshItemUpdateRule : FrozenItemUpdateRule, IUpdateRule
     {
-        public new void Update(IItem item)
+        public new void Update(Item item)
         {
             QualityDecrement = base.QualityDecrement * 2;
             base.Update(item);

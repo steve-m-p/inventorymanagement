@@ -4,6 +4,6 @@ namespace InventoryManagement.Rules
 {
     public interface IUpdateRule
     {
-        void Update(IItem item);
+        void Update(Item item);
     }
 }

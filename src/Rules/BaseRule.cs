@@ -10,17 +10,17 @@ namespace InventoryManagement.Rules
     {
         protected int MinQuality { get; private set; } = 0;
         protected int MaxQuality { get; private set; } = 50;
-        protected void IncreaseQuality(int increment, IItem item)
+        protected void IncreaseQuality(int increment, Item item)
         {
             item.Quality += increment;
         }
 
-        protected void DecreaseQuality(int decrement, IItem item)
+        protected void DecreaseQuality(int decrement, Item item)
         {
             item.Quality -= decrement;
         }
 
-        protected void DecreaseSellIn(IItem item)
+        protected void DecreaseSellIn(Item item)
         {
             item.SellIn--;
         }

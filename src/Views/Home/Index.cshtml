@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+@model InventoryManagement.Models.ItemsViewModel
+
+    <div class="col-6">
+        <form asp-controller="Home" asp-action="Update" method="post" class="form-inline">
+            <!-- Input and Submit elements -->
+            @foreach (var item in Model.Items)
+            {
+                <div class="row">
+                    <div class="form-group">
+                        <label for="txtName">Name</label>
+                        <input type="text" class="form-control" id="txtName" placeholder="Name" value="@item.Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="txtSellIn">Sell In</label>
+                        <input type="number" class="form-control" id="txtSellIn" placeholder="Sell In" value="@item.SellIn" >
+                    </div>
+                    <div class="form-group">
+                        <label for="txtQuality">Quality</label>
+                        <input type="number" class="form-control" id="txtQuality" placeholder="Quality" value="@item.Quality">
+                    </div>
+                </div>
+
+            }
+
+
+        </form>
+    </div>
+
+    <div class="col-6">
+
+    </div>
+
+   

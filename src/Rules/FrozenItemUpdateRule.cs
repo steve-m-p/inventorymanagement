@@ -11,7 +11,7 @@ namespace InventoryManagement.Rules
     {
         public int QualityDecrement = 1;
 
-        public void Update(IItem item)
+        public void Update(Item item)
         {
             DecreaseSellIn(item);
             if (item.Quality > MaxQuality)

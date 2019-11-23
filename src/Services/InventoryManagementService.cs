@@ -2,24 +2,37 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using InventoryManagement.Factories;
 using InventoryManagement.Models;
+using InventoryManagement.Rules;
 
 namespace InventoryManagement.Services
 {
     public class InventoryManagementService : IInventoryManagementService
     {
-        public IItem Update(IItem item)
+        private readonly Func<ItemType, IUpdateRule> _updateRule;
+
+        public InventoryManagementService(Func<ItemType, IUpdateRule> updateRule)
         {
-
-            var factory = new UpdateRuleFactory();
-
-            var updateRule = factory.Create(item);
-
-            updateRule.Update(item);
-
-            return new Item() {Name = item.Name, SellIn = item.SellIn, Quality = item.Quality};
+            _updateRule = updateRule;
         }
 
+        public IEnumerable<string> Update(IEnumerable<Item> items)
+        {
+            var output = new List<string>();
+            foreach (var item in items)
+            {
+                var transformedName = item.Name.Replace(" ", string.Empty);
+                if (Enum.TryParse(transformedName, true, out ItemType itemType))
+                {
+                    _updateRule(itemType).Update(item);
+                    output.Add(item.ToString());
+                }
+                else
+                {
+                    output.Add("NO SUCH ITEM");
+                }
+            }
+            return output;
+        }
     }
 }

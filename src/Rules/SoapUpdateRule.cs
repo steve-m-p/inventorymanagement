@@ -8,7 +8,7 @@ namespace InventoryManagement.Rules
 {
     public class SoapUpdateRule : IUpdateRule
     {
-        public void Update(IItem item)
+        public void Update(Item item)
         {
             item.SellIn = item.SellIn;
             item.Quality = item.Quality;

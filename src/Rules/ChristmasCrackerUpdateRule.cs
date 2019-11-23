@@ -8,7 +8,7 @@ namespace InventoryManagement.Rules
 {
     public class ChristmasCrackerUpdateRule: BaseRule, IUpdateRule
     {
-        public void Update(IItem item)
+        public void Update(Item item)
         {
             DecreaseSellIn(item);
             var qualityIncrease = 0;

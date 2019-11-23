@@ -1,9 +1,10 @@
-﻿using InventoryManagement.Models;
+﻿using System.Collections.Generic;
+using InventoryManagement.Models;
 
 namespace InventoryManagement.Services
 {
     public interface IInventoryManagementService
     {
-        IItem Update(IItem item);
+        IEnumerable<string> Update(IEnumerable<Item> item);
     }
 }
